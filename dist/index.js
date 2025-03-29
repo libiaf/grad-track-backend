@@ -12,6 +12,10 @@ app.use(express_1.default.json());
 app.get('/evaluados/getallevaluados', (req, res) => {
     res.send('Aqui están todos los evaluados');
 });
+app.post('/evaluados/crearevaluado', (req, res) => {
+    const id = req.body.id;
+    res.send(`Evaluado creado con id: ${id}`);
+});
 app.listen(port, () => {
     console.log(`Example app listening on port ${port}`);
 });
