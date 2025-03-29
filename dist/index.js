@@ -10,11 +10,14 @@ const port = 3000;
 app.use(morgan('dev'));
 app.use(express_1.default.json());
 app.get('/evaluados/getallevaluados', (req, res) => {
-    res.send('Aqui están todos los evaluados');
+    res.send('Obtener lista con todos los evaluados');
 });
 app.post('/evaluados/crearevaluado', (req, res) => {
     const id = req.body.id;
-    res.send(`Evaluado creado con id: ${id}`);
+    res.send(`Crear nuevo evaluado con id: ${id}`);
+});
+app.patch('/evaluados/updateevaluado/:id', (req, res) => {
+    res.send(`Actualizar el evaluado con id ${req.params.id} con el nombre "${req.body.nombre}"`);
 });
 app.listen(port, () => {
     console.log(`Example app listening on port ${port}`);

@@ -10,12 +10,16 @@ app.use(morgan('dev'))
 app.use(express.json()) 
 
 app.get('/evaluados/getallevaluados', (req:Request, res:Response) => { 
-  res.send('Aqui están todos los evaluados') 
+  res.send('Obtener lista con todos los evaluados') 
 }) 
 
 app.post('/evaluados/crearevaluado', (req:Request, res:Response) => {
   const id = req.body.id
-  res.send(`Evaluado creado con id: ${id}`)
+  res.send(`Crear nuevo evaluado con id: ${id}`)
+})
+
+app.patch('/evaluados/updateevaluado/:id', (req:Request, res:Response) => {
+  res.send(`Actualizar el evaluado con id ${req.params.id} con el nombre "${req.body.nombre}"`)
 })
 
 app.listen(port, () => { 
