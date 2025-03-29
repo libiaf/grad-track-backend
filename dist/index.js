@@ -14,10 +14,14 @@ app.get('/evaluados/getallevaluados', (req, res) => {
 });
 app.post('/evaluados/crearevaluado', (req, res) => {
     const id = req.body.id;
-    res.send(`Crear nuevo evaluado con id: ${id}`);
+    res.send(`Crear nuevo evaluado con id ${id}`);
 });
 app.patch('/evaluados/updateevaluado/:id', (req, res) => {
     res.send(`Actualizar el evaluado con id ${req.params.id} con el nombre "${req.body.nombre}"`);
+});
+app.delete('/evaluados/deleteevaluado', (req, res) => {
+    const id = req.body.id;
+    res.send(`Borrar el evaluado con id ${id}`);
 });
 app.listen(port, () => {
     console.log(`Example app listening on port ${port}`);
