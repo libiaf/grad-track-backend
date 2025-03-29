@@ -8,8 +8,9 @@ const morgan = require('morgan');
 const app = (0, express_1.default)();
 const port = 3000;
 app.use(morgan('dev'));
-app.get('/', (req, res) => {
-    res.send('Hello Typescript!');
+app.use(express_1.default.json());
+app.get('/evaluados/getallevaluados', (req, res) => {
+    res.send('Aqui están todos los evaluados');
 });
 app.listen(port, () => {
     console.log(`Example app listening on port ${port}`);
