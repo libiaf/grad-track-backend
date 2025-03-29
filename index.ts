@@ -14,8 +14,7 @@ app.get('/evaluados/getallevaluados', (req:Request, res:Response) => {
 }) 
 
 app.post('/evaluados/crearevaluado', (req:Request, res:Response) => {
-  const id = req.body.id
-  res.send(`Crear nuevo evaluado con id ${id}`)
+  res.send(`Crear nuevo evaluado con id ${req.body.id}`)
 })
 
 app.patch('/evaluados/updateevaluado/:id', (req:Request, res:Response) => {
@@ -23,8 +22,11 @@ app.patch('/evaluados/updateevaluado/:id', (req:Request, res:Response) => {
 })
 
 app.delete('/evaluados/deleteevaluado', (req:Request, res:Response) => {
-  const id = req.body.id
-  res.send(`Borrar el evaluado con id ${id}`) 
+  res.send(`Borrar el evaluado con id ${req.body.id}`) 
+}) 
+
+app.get('/evaluados/getevaluado/:id', (req:Request, res:Response) => { 
+  res.send(`Obtener evaluado con id ${req.params.id}`) 
 }) 
 
 app.listen(port, () => { 
