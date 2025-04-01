@@ -4,26 +4,13 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
-const morgan = require('morgan');
+const routes_1 = __importDefault(require("./src/routes"));
 const app = (0, express_1.default)();
+const morgan = require('morgan');
 const port = 3000;
 app.use(morgan('dev'));
 app.use(express_1.default.json());
-app.get('/evaluados/getallevaluados', (req, res) => {
-    res.send('Obtener lista con todos los evaluados');
-});
-app.post('/evaluados/crearevaluado', (req, res) => {
-    res.send(`Crear nuevo evaluado con id ${req.body.id}`);
-});
-app.patch('/evaluados/updateevaluado/:id', (req, res) => {
-    res.send(`Actualizar el evaluado con id ${req.params.id} con el nombre "${req.body.nombre}"`);
-});
-app.delete('/evaluados/deleteevaluado', (req, res) => {
-    res.send(`Borrar el evaluado con id ${req.body.id}`);
-});
-app.get('/evaluados/getevaluado/:id', (req, res) => {
-    res.send(`Obtener evaluado con id ${req.params.id}`);
-});
+app.use(routes_1.default);
 app.listen(port, () => {
     console.log(`Example app listening on port ${port}`);
 });
