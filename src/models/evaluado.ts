@@ -1,5 +1,6 @@
-import { Table, Model, Column, CreatedAt, UpdatedAt, DataType } from 'sequelize-typescript';
+import { Table, Model, Column, CreatedAt, UpdatedAt, DataType, ForeignKey } from 'sequelize-typescript';
 import { Optional } from 'sequelize';
+import { Poblacion } from './poblacion';
 
 interface EvaluadoAttributes {
   id: number;
@@ -8,6 +9,7 @@ interface EvaluadoAttributes {
   curp: string;
   genero: string;
   graduado: string;
+  poblacionId: number;
 }
 
 interface EvaluadoCreationAttributes extends Optional<EvaluadoAttributes, 'id'> {}
@@ -42,6 +44,13 @@ export class Evaluado extends Model<EvaluadoAttributes, EvaluadoCreationAttribut
   })
   graduado!: string;
 
+  @ForeignKey(() => Poblacion)
+  @Column({
+    type: DataType.INTEGER,
+    allowNull: false,
+  })
+  poblacionId!: number;  // Relación con la tabla Poblaciones
+
   @CreatedAt
   @Column
   createdAt!: Date;
@@ -49,5 +58,4 @@ export class Evaluado extends Model<EvaluadoAttributes, EvaluadoCreationAttribut
   @UpdatedAt
   @Column
   updatedAt!: Date;
-
 }

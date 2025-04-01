@@ -1,19 +1,18 @@
-import { RequestHandler, Request, Response } from 'express'; // Asegúrate de que esté aquí
-import { Evaluado } from '../models/evaluado'; // Asegúrate de que la ruta sea correcta
+import { RequestHandler, Request, Response } from 'express'; 
+import { Evaluado } from '../models/evaluado'; 
+import { Poblacion } from '../models/poblacion'; 
+import { Zona } from '../models/zona'; 
 
 export const createEvaluado: RequestHandler = (req: Request, res: Response): void => {
-  // Validar que los datos no estén vacíos
   if (!req.body) {
-    // No usar `return` aquí
       res.status(400).json({
       status: "error",
       message: "El contenido no puede estar vacío",
       payload: null,
     });
-    return;  // Aquí sí debes usar `return` para que el flujo de la función termine
+    return;  
   }
 
-  // Guardar el evaluado en la base de datos
   const evaluado = { ...req.body };
   Evaluado.create(evaluado)
     .then((data: Evaluado | null) => {
@@ -32,25 +31,31 @@ export const createEvaluado: RequestHandler = (req: Request, res: Response): voi
     });
 };
 
-// Obtener todos los evaluados
 export const getAllEvaluados: RequestHandler = (req: Request, res: Response) => {
-    Evaluado.findAll()
-      .then((data: Evaluado[]) => {
-        return res.status(200).json({
-          status: "success",
-          message: "Evaluados obtenidos con éxito",
-          payload: data,
-        });
-      })
-      .catch((err) => {
-        return res.status(500).json({
-          status: "error",
-          message: "Algo ocurrió al obtener los evaluados. " + err.message,
-          payload: null,
-        });
+  Evaluado.findAll({
+    include: [
+      {
+        model: Poblacion,
+        include: [Zona], // También trae la Zona de cada Población
+      },
+    ],
+  })
+    .then((data: Evaluado[]) => {
+      return res.status(200).json({
+        status: "success",
+        message: "Evaluados obtenidos con éxito",
+        payload: data,
       });
-  };
-// Obtener evaluado por id
+    })
+    .catch((err) => {
+      return res.status(500).json({
+        status: "error",
+        message: "Algo ocurrió al obtener los evaluados. " + err.message,
+        payload: null,
+      });
+    });
+};
+
 export const getEvaluadoById: RequestHandler = (req: Request, res: Response) => {
     Evaluado.findByPk(req.params.id)
       .then((data: Evaluado | null) => {
@@ -69,27 +74,26 @@ export const getEvaluadoById: RequestHandler = (req: Request, res: Response) => 
       });
   };
   
-// Actualizar un evaluado
+
 export const modifyEvaluado: RequestHandler = (req: Request, res: Response): void => {
-  // Validar que los datos no estén vacíos
   if (!req.body) {
     res.status(400).json({
       status: "error",
       message: "El contenido no puede estar vacío.",
       payload: null,
     });
-    return;  // Termina la ejecución aquí, sin retorno explícito
+    return;  
   }
 
-  // Actualizar el evaluado en la base de datos
+
   Evaluado.update({ ...req.body }, { where: { id: req.params.id } })
-    .then(([affectedRows]) => {  // Modificado para usar destructuración y obtener directamente el número de filas afectadas
-      if (affectedRows > 0) {  // Verificar si alguna fila fue afectada
+    .then(([affectedRows]) => {  
+      if (affectedRows > 0) {  
         res.status(200).json({
           status: "success",
           message: "Evaluado actualizado con éxito",
           payload: { ...req.body },
-        });
+        });    
       } else {
         res.status(500).json({
           status: "error",
@@ -102,12 +106,12 @@ export const modifyEvaluado: RequestHandler = (req: Request, res: Response): voi
       res.status(500).json({
         status: "error",
         message: "Algo ocurrió al actualizar el evaluado. " + err.message,
-        payload: null,
+        payload: null,      
       });
     });
 };
 
-// Eliminar un evaluado
+
 export const deleteEvaluado: RequestHandler = async (req: Request, res: Response): Promise<void> => {
   const { id } = req.body;
   try {
