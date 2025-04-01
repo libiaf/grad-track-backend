@@ -16,6 +16,7 @@ const connection = new sequelize_typescript_1.Sequelize({
     dialect: 'mysql',
     username: 'root',
     password: '123456',
+    storage: ':memory:',
     models: [
         evaluado_1.Evaluado
     ]
