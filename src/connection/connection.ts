@@ -6,6 +6,7 @@ const connection = new Sequelize({
   dialect: 'mysql',
   username: 'root',
   password: '123456',
+  storage: ':memory:',
   models: [
     Evaluado
   ]
