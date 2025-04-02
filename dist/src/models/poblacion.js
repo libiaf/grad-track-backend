@@ -9,12 +9,13 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Evaluado = void 0;
+exports.Poblacion = void 0;
 const sequelize_typescript_1 = require("sequelize-typescript");
-const poblacion_1 = require("./poblacion");
-let Evaluado = class Evaluado extends sequelize_typescript_1.Model {
+const zona_1 = require("./zona");
+const evaluado_1 = require("./evaluado");
+let Poblacion = class Poblacion extends sequelize_typescript_1.Model {
 };
-exports.Evaluado = Evaluado;
+exports.Poblacion = Poblacion;
 __decorate([
     (0, sequelize_typescript_1.Column)({
         type: sequelize_typescript_1.DataType.INTEGER,
@@ -22,54 +23,49 @@ __decorate([
         autoIncrement: true,
     }),
     __metadata("design:type", Number)
-], Evaluado.prototype, "id", void 0);
+], Poblacion.prototype, "id", void 0);
 __decorate([
-    sequelize_typescript_1.Column,
-    __metadata("design:type", String)
-], Evaluado.prototype, "nombre", void 0);
-__decorate([
-    sequelize_typescript_1.Column,
-    __metadata("design:type", String)
-], Evaluado.prototype, "apellidos", void 0);
-__decorate([
-    sequelize_typescript_1.Column,
-    __metadata("design:type", String)
-], Evaluado.prototype, "curp", void 0);
-__decorate([
-    sequelize_typescript_1.Column,
-    __metadata("design:type", String)
-], Evaluado.prototype, "genero", void 0);
-__decorate([
-    (0, sequelize_typescript_1.Column)({
-        type: sequelize_typescript_1.DataType.STRING,
-        allowNull: true,
-    }),
-    __metadata("design:type", String)
-], Evaluado.prototype, "graduado", void 0);
-__decorate([
-    (0, sequelize_typescript_1.ForeignKey)(() => poblacion_1.Poblacion),
     (0, sequelize_typescript_1.Column)({
         type: sequelize_typescript_1.DataType.INTEGER,
         allowNull: false,
     }),
     __metadata("design:type", Number)
-], Evaluado.prototype, "poblacionId", void 0);
+], Poblacion.prototype, "edad", void 0);
 __decorate([
-    (0, sequelize_typescript_1.BelongsTo)(() => poblacion_1.Poblacion),
-    __metadata("design:type", poblacion_1.Poblacion)
-], Evaluado.prototype, "poblacion", void 0);
+    (0, sequelize_typescript_1.Column)({
+        type: sequelize_typescript_1.DataType.STRING,
+        allowNull: false,
+    }),
+    __metadata("design:type", String)
+], Poblacion.prototype, "nivelSocioeconomico", void 0);
+__decorate([
+    (0, sequelize_typescript_1.ForeignKey)(() => zona_1.Zona),
+    (0, sequelize_typescript_1.Column)({
+        type: sequelize_typescript_1.DataType.INTEGER,
+        allowNull: false,
+    }),
+    __metadata("design:type", Number)
+], Poblacion.prototype, "zonaId", void 0);
+__decorate([
+    (0, sequelize_typescript_1.BelongsTo)(() => zona_1.Zona),
+    __metadata("design:type", zona_1.Zona)
+], Poblacion.prototype, "zona", void 0);
+__decorate([
+    (0, sequelize_typescript_1.HasMany)(() => evaluado_1.Evaluado),
+    __metadata("design:type", Array)
+], Poblacion.prototype, "evaluados", void 0);
 __decorate([
     sequelize_typescript_1.CreatedAt,
     sequelize_typescript_1.Column,
     __metadata("design:type", Date)
-], Evaluado.prototype, "createdAt", void 0);
+], Poblacion.prototype, "createdAt", void 0);
 __decorate([
     sequelize_typescript_1.UpdatedAt,
     sequelize_typescript_1.Column,
     __metadata("design:type", Date)
-], Evaluado.prototype, "updatedAt", void 0);
-exports.Evaluado = Evaluado = __decorate([
+], Poblacion.prototype, "updatedAt", void 0);
+exports.Poblacion = Poblacion = __decorate([
     (0, sequelize_typescript_1.Table)({
-        tableName: "Evaluados",
+        tableName: "Poblaciones",
     })
-], Evaluado);
+], Poblacion);

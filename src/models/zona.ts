@@ -31,10 +31,10 @@ export class Zona extends Model<ZonaAttributes, ZonaCreationAttributes> {
   estado!: string;
 
   @Column
-  tipoZona!: string;  // Ejemplo: "Urbano", "Rural", "Semirural"
+  tipoZona!: string;
 
   @Column
-  ubicacionGeografica!: string;  // Ejemplo: "Norte", "Sur", "Centro"
+  ubicacionGeografica!: string;
 
   @HasMany(() => Poblacion)
   poblaciones!: Poblacion[];

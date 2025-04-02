@@ -36,7 +36,9 @@ export const getAllEvaluados: RequestHandler = (req: Request, res: Response) => 
     include: [
       {
         model: Poblacion,
-        include: [Zona], // También trae la Zona de cada Población
+        include: [{
+          model: Zona,
+        }],
       },
     ],
   })
@@ -57,7 +59,16 @@ export const getAllEvaluados: RequestHandler = (req: Request, res: Response) => 
 };
 
 export const getEvaluadoById: RequestHandler = (req: Request, res: Response) => {
-    Evaluado.findByPk(req.params.id)
+    Evaluado.findByPk(req.params.id, {
+      include: [
+        {
+          model: Poblacion,
+          include: [{
+            model: Zona
+          }],
+        },
+      ],
+    })
       .then((data: Evaluado | null) => {
         return res.status(200).json({
           status: "success",
@@ -72,7 +83,7 @@ export const getEvaluadoById: RequestHandler = (req: Request, res: Response) => 
           payload: null,
         });
       });
-  };
+};
   
 
 export const modifyEvaluado: RequestHandler = (req: Request, res: Response): void => {

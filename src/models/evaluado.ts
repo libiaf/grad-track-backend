@@ -1,4 +1,4 @@
-import { Table, Model, Column, CreatedAt, UpdatedAt, DataType, ForeignKey } from 'sequelize-typescript';
+import { Table, Model, Column, CreatedAt, UpdatedAt, DataType, ForeignKey, BelongsTo } from 'sequelize-typescript';
 import { Optional } from 'sequelize';
 import { Poblacion } from './poblacion';
 
@@ -49,7 +49,10 @@ export class Evaluado extends Model<EvaluadoAttributes, EvaluadoCreationAttribut
     type: DataType.INTEGER,
     allowNull: false,
   })
-  poblacionId!: number;  // Relación con la tabla Poblaciones
+  poblacionId!: number;
+
+  @BelongsTo(() => Poblacion)
+  poblacion!: Poblacion;
 
   @CreatedAt
   @Column

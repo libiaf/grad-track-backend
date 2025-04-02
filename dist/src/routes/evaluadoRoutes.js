@@ -34,9 +34,8 @@ var __importStar = (this && this.__importStar) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
-const evaluadoController = __importStar(require("../controllers/evaluadoController")); // Suponiendo que el archivo está en src/controllers
+const evaluadoController = __importStar(require("../controllers/evaluadoController"));
 const evaluadoRouter = (0, express_1.Router)();
-// Rutas
 evaluadoRouter.get('/getallevaluados', evaluadoController.getAllEvaluados);
 evaluadoRouter.post('/crearevaluado', evaluadoController.createEvaluado);
 evaluadoRouter.patch('/updateevaluado/:id', evaluadoController.modifyEvaluado);

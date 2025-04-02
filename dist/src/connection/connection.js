@@ -11,18 +11,25 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 const sequelize_typescript_1 = require("sequelize-typescript");
 const evaluado_1 = require("../models/evaluado");
+const poblacion_1 = require("../models/poblacion");
+const zona_1 = require("../models/zona");
 const connection = new sequelize_typescript_1.Sequelize({
     database: 'sisweb_db',
     dialect: 'mysql',
     username: 'root',
     password: '123456',
+    storage: ':memory:',
     models: [
-        evaluado_1.Evaluado
+        evaluado_1.Evaluado,
+        poblacion_1.Poblacion,
+        zona_1.Zona
     ]
 });
 function connectionDB() {
     return __awaiter(this, void 0, void 0, function* () {
         try {
+            yield connection.authenticate();
+            console.log("Conexión a la base de datos establecida con éxito.");
             yield connection.sync();
         }
         catch (e) {

@@ -1,4 +1,4 @@
-import { Table, Model, Column, CreatedAt, UpdatedAt, DataType, ForeignKey, HasMany } from 'sequelize-typescript';
+import { Table, Model, Column, CreatedAt, UpdatedAt, DataType, ForeignKey, HasMany, BelongsTo } from 'sequelize-typescript';
 import { Optional } from 'sequelize';
 import { Zona } from './zona';
 import { Evaluado } from './evaluado';
@@ -34,14 +34,17 @@ export class Poblacion extends Model<PoblacionAttributes, PoblacionCreationAttri
     type: DataType.STRING,
     allowNull: false,
   })
-  nivelSocioeconomico!: string;  // Ejemplo: "Baja", "Media", "Alta"
+  nivelSocioeconomico!: string;
 
   @ForeignKey(() => Zona)
   @Column({
     type: DataType.INTEGER,
     allowNull: false,
   })
-  zonaId!: number;  // Relación con la tabla Zonas
+  zonaId!: number;
+
+  @BelongsTo(() => Zona)
+  zona!: Zona;
 
   @HasMany(() => Evaluado)
   evaluados!: Evaluado[];

@@ -1,9 +1,8 @@
 import { Router } from 'express';
-import * as evaluadoController from '../controllers/evaluadoController'; // Suponiendo que el archivo está en src/controllers
+import * as evaluadoController from '../controllers/evaluadoController';
 
 const evaluadoRouter: Router = Router();
 
-// Rutas
 evaluadoRouter.get('/getallevaluados', evaluadoController.getAllEvaluados);
 evaluadoRouter.post('/crearevaluado', evaluadoController.createEvaluado);
 evaluadoRouter.patch('/updateevaluado/:id', evaluadoController.modifyEvaluado);

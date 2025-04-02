@@ -10,19 +10,18 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.deleteEvaluado = exports.modifyEvaluado = exports.getEvaluadoById = exports.getAllEvaluados = exports.createEvaluado = void 0;
-const evaluado_1 = require("../models/evaluado"); // Asegúrate de que la ruta sea correcta
+const evaluado_1 = require("../models/evaluado");
+const poblacion_1 = require("../models/poblacion");
+const zona_1 = require("../models/zona");
 const createEvaluado = (req, res) => {
-    // Validar que los datos no estén vacíos
     if (!req.body) {
-        // No usar `return` aquí
         res.status(400).json({
             status: "error",
             message: "El contenido no puede estar vacío",
             payload: null,
         });
-        return; // Aquí sí debes usar `return` para que el flujo de la función termine
+        return;
     }
-    // Guardar el evaluado en la base de datos
     const evaluado = Object.assign({}, req.body);
     evaluado_1.Evaluado.create(evaluado)
         .then((data) => {
@@ -41,9 +40,17 @@ const createEvaluado = (req, res) => {
     });
 };
 exports.createEvaluado = createEvaluado;
-// Obtener todos los evaluados
 const getAllEvaluados = (req, res) => {
-    evaluado_1.Evaluado.findAll()
+    evaluado_1.Evaluado.findAll({
+        include: [
+            {
+                model: poblacion_1.Poblacion,
+                include: [{
+                        model: zona_1.Zona,
+                    }],
+            },
+        ],
+    })
         .then((data) => {
         return res.status(200).json({
             status: "success",
@@ -60,9 +67,17 @@ const getAllEvaluados = (req, res) => {
     });
 };
 exports.getAllEvaluados = getAllEvaluados;
-// Obtener evaluado por id
 const getEvaluadoById = (req, res) => {
-    evaluado_1.Evaluado.findByPk(req.params.id)
+    evaluado_1.Evaluado.findByPk(req.params.id, {
+        include: [
+            {
+                model: poblacion_1.Poblacion,
+                include: [{
+                        model: zona_1.Zona
+                    }],
+            },
+        ],
+    })
         .then((data) => {
         return res.status(200).json({
             status: "success",
@@ -79,21 +94,18 @@ const getEvaluadoById = (req, res) => {
     });
 };
 exports.getEvaluadoById = getEvaluadoById;
-// Actualizar un evaluado
 const modifyEvaluado = (req, res) => {
-    // Validar que los datos no estén vacíos
     if (!req.body) {
         res.status(400).json({
             status: "error",
             message: "El contenido no puede estar vacío.",
             payload: null,
         });
-        return; // Termina la ejecución aquí, sin retorno explícito
+        return;
     }
-    // Actualizar el evaluado en la base de datos
     evaluado_1.Evaluado.update(Object.assign({}, req.body), { where: { id: req.params.id } })
         .then(([affectedRows]) => {
-        if (affectedRows > 0) { // Verificar si alguna fila fue afectada
+        if (affectedRows > 0) {
             res.status(200).json({
                 status: "success",
                 message: "Evaluado actualizado con éxito",
@@ -117,7 +129,6 @@ const modifyEvaluado = (req, res) => {
     });
 };
 exports.modifyEvaluado = modifyEvaluado;
-// Eliminar un evaluado
 const deleteEvaluado = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { id } = req.body;
     try {
